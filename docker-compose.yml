@@ -1,0 +1,33 @@
+version: '3'
+
+services: 
+  web:
+    build:
+      dockerfile: Dockerfile
+      context: .
+      args: 
+        - WORK_DIR=usr/src
+    container_name: qrvery_web
+    ports: 
+      - '8080:8080'
+    links: 
+      - mongo
+    depends_on: 
+      - mongo
+    volumes: 
+      - .:/usr/src
+    # command: npm run dev
+
+  mongo:
+    container_name: qrvery_mongo_db
+    image: mongo:3.6.22
+    ports: 
+      - '27017:27017'
+  
+  admin-mongo:
+    image: 0x59/admin-mongo:latest
+    ports:
+      - "8082:8082"
+    env_file: .env
+    links:
+      - mongo
