@@ -16,7 +16,7 @@ services:
       - mongo
     volumes: 
       - .:/usr/src
-    # command: npm run dev
+    command: npm run dev
 
   mongo:
     container_name: qrvery_mongo_db

@@ -26,24 +26,24 @@ module.exports = {
                     foreignField: '_id',
                     as: 'project'
                   }},
+                {$unwind: '$project'},
                 {$lookup: {
                     from: 'users',
                     localField: 'project.user',
                     foreignField: '_id',
                     as: 'user'
                   }},
+                {$unwind: '$user'},
                 {$project: {
                     '_id': 1,
                     'name': 1,
                     'duration': 1,
                     'status': 1,
                     'createAt': 1,
-                    'project': {
-                        name: 1
-                    },
+                    'project': '$project.name',
                     'user': {
                         name: 1,
-                        lastname: 1
+                        lastName: 1
                     }
                 }},
                 {'$sort': {'createAt': -1}}
