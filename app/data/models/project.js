@@ -5,10 +5,10 @@ const Schema = mongoose.Schema;
 const ProjectSchema = new Schema({
     name: {
         type: String,
-        required: true
+        required: [true, "Name is required."]
     },
     user: {
-        required: true,
+        required: [true, "You should specify user id."],
         type: Schema.Types.ObjectId,
         ref: 'users'
     },

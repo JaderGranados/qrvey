@@ -5,19 +5,19 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
     name: {
         type: String,
-        required: true
+        required: [true, "Name is required."]
     },
     lastName: {
         type: String,
-        required: true
+        required: [true, "Lastname is required."]
     },
     username:{
         type: String,
-        required: true
+        required: [true, "Username is required."]
     },
     password:{
         type: String,
-        required: true,
+        required: [true, "Password is required"],
         select: false
     },
     projects: [{

@@ -1,16 +1,35 @@
+const mongoose = require('mongoose');
 const ProjectModel = require('../data/models/project');
 const TaskModel = require('../data/models/task');
-const taskStatus = require('../data/models/task-status')
+const TimeRecordModel = require('../data/models/time-record');
+const taskStatus = require('../data/models/task-status');
 
 module.exports = {
     create: async task => {
-        const model = new TaskModel(task);
         try {
+            if(task.hours || task.minuts || task.seconds)
+            {
+                task.hours = task.hours * (3600) || 0;
+                task.minuts = task.minuts * (60) || 0;
+                task.seconds = task.seconds || 0;
+
+                task.duration = task.hours + task.minuts + task.seconds;
+            }
+            var projectExists = await ProjectModel.exists({'_id': task.project});
+            if (!projectExists){
+                throw new Error("Project id is not correct.");
+            }
+            const timeRecord = await TimeRecordModel.create({task: taskId, status: 'CREATED'});
+            task.timerecords = [timeRecord.toObject()._id];
+
+            const model = new TaskModel(task);
             var newTask = await model.save();
+            var taskObject = newTask.toObject();
+
             await ProjectModel.findByIdAndUpdate(task.project, {'$push': {'tasks': newTask._id}}, {safe: true, new: true})
                 .populate('tasks')
                 .exec();
-            return newTask;
+            return taskObject;
         }
         catch (error){
             throw error;
@@ -18,7 +37,6 @@ module.exports = {
     },
     getByUserId: async userId => {
         try{
-            console.log(userId);
             const tasks = await TaskModel.aggregate([
                 {$lookup: {
                     from: 'projects',
@@ -34,10 +52,15 @@ module.exports = {
                     as: 'user'
                   }},
                 {$unwind: '$user'},
+                {$match: {'user._id' : mongoose.Types.ObjectId(userId)}},
                 {$project: {
                     '_id': 1,
-                    'name': 1,
-                    'duration': 1,
+                    'name': {
+                        $ifNull: ['$name', 'No named']
+                    },
+                    'duration': {
+                        $ifNull: ['$duration', 0]
+                    },
                     'status': 1,
                     'createAt': 1,
                     'project': '$project.name',
@@ -63,7 +86,8 @@ module.exports = {
                 throw new Error("You cannot start this task.");
             }
             console.log(task.status);
-            return await TaskModel.findByIdAndUpdate(taskId, {startDate: Date.now(), status: taskStatus.started}, {new: true});
+            const timerecord = await TimeRecordModel.create({task: taskId, status: 'STARTED'});
+            return await TaskModel.findByIdAndUpdate(taskId, {startDate: Date.now(), status: taskStatus.started, '$push': {'timerecords': timerecord._id}}, {new: true});
         }
         catch (err){
             throw err;
@@ -82,7 +106,8 @@ module.exports = {
             
             var sec = Math.abs(Date.now() - task.startDate)/1000
             sec += task.toObject().duration;
-            return await TaskModel.findByIdAndUpdate(taskId, {status: taskStatus.paused, duration: sec}, {new: true});
+            const timerecord = await TimeRecordModel.create({task: taskId, status: 'PAUSED'});
+            return await TaskModel.findByIdAndUpdate(taskId, {status: taskStatus.paused, duration: sec, '$push': {'timerecords': timerecord._id}}, {new: true});
         }
         catch (err){
             throw err;
@@ -108,7 +133,12 @@ module.exports = {
             }
 
             updates.status = taskStatus.ended;
-            return await TaskModel.findByIdAndUpdate(taskId, updates, {new: true});
+            const timerecord = await TimeRecordModel.create({task: taskId, status: 'ENDED'});
+
+            return await TaskModel.findByIdAndUpdate(taskId, {
+                ...updates,
+                '$push': {'timerecords': timerecord._id}
+            }, {new: true});
         }
         catch (err){
             throw err;
@@ -117,13 +147,20 @@ module.exports = {
     restartATask: async taskId => {
         try{
             const task = await TaskModel.findOne({_id: taskId});
+            const taskObject = task.toObject();
             if (!task){
                 throw new Error(`Couldn't get the task with id ${taskId}`);
             } else if (task.toObject().status == taskStatus.created){
                 throw new Error("You cannot restart this task.");
             }
-            
-            return await TaskModel.findByIdAndUpdate(taskId, {status: taskStatus.created, duration: 0, startDate: null}, {new: true});
+
+            const timerecord = await TimeRecordModel.create({task: taskId, status: 'RESTARTED'});
+            var result =  await TaskModel.findByIdAndUpdate(taskId, 
+                {status: taskStatus.created, duration: 0, startDate: null, '$push': {'timerecords': timerecord._id}}, 
+                {new: true, });
+            result = result.toObject();
+
+            return result;
         }
         catch (err){
             throw err;

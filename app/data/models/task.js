@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const schemaBase = require('./schema-base')
 const Schema = mongoose.Schema;
-const taskStatusEnum = require('./task-status')
+const taskStatusEnum = require('./task-status');
 
 const TaskSchema = new Schema({
     name: {
@@ -25,10 +25,14 @@ const TaskSchema = new Schema({
         default: 'CREATED'
     },
     project: {
-        required: true,
+        required: [true, "You should specify project id."],
         type: Schema.Types.ObjectId,
         ref: 'projects'
     },
+    timerecords: [{
+        type: Schema.Types.ObjectId,
+        ref: 'timerecords'
+    }],
     ... schemaBase
 });
 
