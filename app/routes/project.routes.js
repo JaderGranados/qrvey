@@ -39,4 +39,42 @@ router.post('/api/project', async (req, res) => {
     }
 });
 
+router.post('/api/project/:pid/add-tasks', async (req, res) => {
+    try {
+        if (!req.params.pid){
+            throw new Error("Couldn't get project id");
+        }
+        res.send({
+            success: true,
+            data: await service.createTasks(req.params.pid, req.body)
+        });
+    }
+    catch (error){
+        console.error(error.message);
+        res.send({
+            success: false,
+            errorMessage: error.message
+        });
+    }
+});
+
+router.put('/api/project/:pid', async (req, res) => {
+    try {
+        if (!req.params.pid){
+            throw new Error("Couldn't get project id");
+        }
+        res.send({
+            success: true,
+            data: await service.update(req.params.pid, req.body)
+        });
+    }
+    catch (error){
+        console.error(error.message);
+        res.send({
+            success: false,
+            errorMessage: error.message
+        });
+    }
+});
+
 module.exports = router;

@@ -7,13 +7,13 @@ const taskStatus = require('../data/models/task-status');
 module.exports = {
     create: async task => {
         try {
-            if(task.hours || task.minuts || task.seconds)
+            if(task.hours || task.minutes || task.seconds)
             {
                 task.hours = task.hours * (3600) || 0;
-                task.minuts = task.minuts * (60) || 0;
+                task.minutes = task.minutes * (60) || 0;
                 task.seconds = task.seconds || 0;
 
-                task.duration = task.hours + task.minuts + task.seconds;
+                task.duration = task.hours + task.minutes + task.seconds;
             }
             var projectExists = await ProjectModel.exists({'_id': task.project});
             if (!projectExists){
@@ -164,6 +164,35 @@ module.exports = {
         }
         catch (err){
             throw err;
+        }
+    },
+    update: async (taskId, values) => {
+        try {
+            const taskExists = await TaskModel.exists({_id: taskId});
+            if (!taskExists){
+                throw new Error("Task id is not correct.");
+            }
+            if(task.hours || task.minutes || task.seconds)
+            {
+                task.hours = task.hours * (3600) || 0;
+                task.minutes = task.minutes * (60) || 0;
+                task.seconds = task.seconds || 0;
+
+                task.duration = task.hours + task.minutes + task.seconds;
+            }
+            if (values.project){
+                const projectExists = await ProjectModel.exists({_id: values.project, 'tasks': {$ne: taskId}});
+                console.log(projectExists);
+                if (!projectExists){
+                    throw new Error("Project already has this task or doesn't exist.");
+                }
+                await ProjectModel.findOneAndUpdate({tasks: taskId}, {$pull: {'tasks': taskId}});
+                await ProjectModel.findByIdAndUpdate(values.project, {$push: {'tasks': taskId}});
+            }
+            return await TaskModel.findByIdAndUpdate(taskId, values, {new: true});
+        }
+        catch (error){
+            throw error;
         }
     }
 }

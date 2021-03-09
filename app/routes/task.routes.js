@@ -34,7 +34,7 @@ router.post('/api/task', async (req, res) => {
         });
     }
     catch (error){
-        console.error(error.message);
+        console.error(error);
         res.send({
             success: false,
             errorMessage: error.message
@@ -42,7 +42,7 @@ router.post('/api/task', async (req, res) => {
     }
 });
 
-router.get('/api/task/start-task/:tid', async (req, res) => {
+router.get('/api/task/:tid/start-task', async (req, res) => {
     try {
         const taskId = req.params.tid;
         if (!taskId){
@@ -62,7 +62,7 @@ router.get('/api/task/start-task/:tid', async (req, res) => {
     }
 });
 
-router.get('/api/task/pause-task/:tid', async (req, res) => {
+router.get('/api/task/:tid/pause-task', async (req, res) => {
     try {
         const taskId = req.params.tid;
         if (!taskId){
@@ -82,7 +82,7 @@ router.get('/api/task/pause-task/:tid', async (req, res) => {
     }
 });
 
-router.get('/api/task/stop-task/:tid', async (req, res) => {
+router.get('/api/task/:tid/stop-task', async (req, res) => {
     try {
         const taskId = req.params.tid;
         if (!taskId){
@@ -102,7 +102,7 @@ router.get('/api/task/stop-task/:tid', async (req, res) => {
     }
 });
 
-router.get('/api/task/restart-task/:tid', async (req, res) => {
+router.get('/api/task/:tid/restart-task', async (req, res) => {
     try {
         const taskId = req.params.tid;
         if (!taskId){
@@ -111,6 +111,25 @@ router.get('/api/task/restart-task/:tid', async (req, res) => {
         res.send({
             success: true,
             data: await service.restartATask(taskId)
+        });
+    }
+    catch (error){
+        console.error(error);
+        res.send({
+            success: false,
+            errorMessage: error.message
+        });
+    }
+});
+
+router.put('/api/task/:tid', async (req, res) => {
+    try {
+        if (!req.params.tid){
+            throw new Error("Couldn't get task id.");
+        }
+        res.send({
+            success: true,
+            data: await service.update(req.params.tid, req.body)
         });
     }
     catch (error){
