@@ -2,7 +2,7 @@
 FROM node:14
 
 # Enviroment variables
-ARG WORK_DIR
+ARG WORK_DIR=usr/src
 ARG NODE_ENV=development
 ENV NODE_ENV ${NODE_ENV}
  
@@ -15,6 +15,8 @@ WORKDIR ${WORK_DIR}
 COPY package*.json ./
 
 # Init commands
+COPY . .
 RUN npm install
 
-# CMD [ "npm", "run", "dev" ]
+CMD [ "npm", "run", "start" ]
+EXPOSE 8080

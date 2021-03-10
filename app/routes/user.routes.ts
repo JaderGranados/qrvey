@@ -12,7 +12,7 @@ router.get('/api/user', async (req:Request, res:Response) => {
     }
     catch(error){
         console.error(error);
-        res.status(400).send({
+        res.status(422).send({
             success: false,
             errorMessage: error.message
         });
@@ -28,7 +28,7 @@ router.post('/api/user', async (req:Request, res:Response) => {
     }
     catch (error){
         console.error(error);
-        res.status(400).send({
+        res.status(422).send({
             success: false,
             errorMessage: error.message
         });
@@ -47,7 +47,7 @@ router.put('/api/user/:uid', async (req:Request, res:Response) => {
     }
     catch (error){
         console.error(error);
-        res.status(400).send({
+        res.status(422).send({
             success: false,
             errorMessage: error.message
         });

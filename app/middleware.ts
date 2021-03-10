@@ -9,7 +9,7 @@ export module Middlewares {
             next();
         }
         else{
-            response.send({
+            response.status(401).send({
                 success: false,
                 errorMessage: 'Unauthorized'
             });

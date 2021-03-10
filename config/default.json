@@ -1,5 +1,5 @@
 {
   "qrvey": {
-    "connectionString": "mongodb://mongo/mydatabase"
+    "connectionString": "mongodb+srv://admin:jader1082961110@cluster0.vh4yb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
   }
 }

@@ -15,7 +15,7 @@ router.get("/api/project/:uid", async (req:Request, res:Response) => {
     });
   } catch (err) {
     console.error(err);
-    res.status(400).send({
+    res.status(422).send({
       success: false,
       errorMessage: err.message,
     });
@@ -30,7 +30,7 @@ router.post("/api/project", async (req:Request, res:Response) => {
     });
   } catch (error) {
     console.error(error.message);
-    res.status(400).send({
+    res.status(422).send({
       success: false,
       errorMessage: error.message,
     });
@@ -48,7 +48,7 @@ router.post("/api/project/:pid/add-tasks", async (req:Request, res:Response) => 
     });
   } catch (error) {
     console.error(error.message);
-    res.status(400).send({
+    res.status(422).send({
       success: false,
       errorMessage: error.message,
     });
@@ -66,7 +66,7 @@ router.put("/api/project/:pid", async (req:Request, res:Response) => {
     });
   } catch (error) {
     console.error(error.message);
-    res.status(400).send({
+    res.status(422).send({
       success: false,
       errorMessage: error.message,
     });

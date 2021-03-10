@@ -1,7 +1,7 @@
 {
   "name": "qrvey",
   "version": "1.0.0",
-  "description": "",
+  "description": "QRVEY APP",
   "scripts": {
     "start:dev": "nodemon",
     "build": "rm -r ./build; tsc; cp ./node_modules/common-js/common.min.js ./build/",
@@ -10,6 +10,9 @@
   },
   "author": "Jader Granados",
   "license": "ISC",
+  "engines": {
+    "node": "^10.15"
+  },
   "dependencies": {
     "common-js": "^0.3.8",
     "config": "^3.3.6",

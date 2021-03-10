@@ -6,7 +6,9 @@ import projectRoutes from'./routes/project.routes';
 import taskRoutes from './routes/task.routes';
 
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 8080;
+
+console.log(port);
 
 // Middlewares
 app.use(express.json());
