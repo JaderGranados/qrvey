@@ -17,7 +17,7 @@ router.get("/api/task/:uid", async (req:Request, res:Response) => {
     });
   } catch (err) {
     console.error(err);
-    res.send({
+    res.status(400).send({
       success: false,
       errorMessage: err.message,
     });
@@ -34,7 +34,7 @@ router.post("/api/task", async (req:Request, res:Response) => {
     });
   } catch (error) {
     console.error(error);
-    res.send({
+    res.status(400).send({
       success: false,
       errorMessage: error.message,
     });
@@ -53,7 +53,7 @@ router.get("/api/task/:tid/start-task", async (req:Request, res:Response) => {
     });
   } catch (error) {
     console.error(error);
-    res.send({
+    res.status(400).send({
       success: false,
       errorMessage: error.message,
     });
@@ -72,7 +72,7 @@ router.get("/api/task/:tid/pause-task", async (req:Request, res:Response) => {
     });
   } catch (error) {
     console.error(error);
-    res.send({
+    res.status(400).send({
       success: false,
       errorMessage: error.message,
     });
@@ -91,7 +91,7 @@ router.get("/api/task/:tid/stop-task", async (req:Request, res:Response) => {
     });
   } catch (error) {
     console.error(error);
-    res.send({
+    res.status(400).send({
       success: false,
       errorMessage: error.message,
     });
@@ -110,7 +110,7 @@ router.get("/api/task/:tid/restart-task", async (req:Request, res:Response) => {
     });
   } catch (error) {
     console.error(error);
-    res.send({
+    res.status(400).send({
       success: false,
       errorMessage: error.message,
     });
@@ -128,7 +128,7 @@ router.put("/api/task/:tid", async (req:Request, res:Response) => {
     });
   } catch (error) {
     console.error(error);
-    res.send({
+    res.status(400).send({
       success: false,
       errorMessage: error.message,
     });
