@@ -211,18 +211,18 @@
   * **Code:** 200 <br />
     **Content:** 
     `"success": true,
-    `"data": [
-        `{"_id": [string],
-        `"status": [string],
-        `"createAt": [Date],
-        `"user": {
-            `"name": [string],
-            `"lastName": [string]
-        `},
-        `"name": [string],
-        `"duration": [number],
-        `"project": [string]
-        `}]`
+    "data": [
+        {"_id": [string],
+        "status": [string],
+        "createAt": [Date],
+        "user": {
+            "name": [string],
+            "lastName": [string]
+        },
+        "name": [string],
+        "duration": [number],
+        "project": [string]
+        }]`
         
      _Note: Duration field is in seconds and project field is the name of task's project_
  
