@@ -6,7 +6,7 @@
   _https://qrvey.herokuapp.com/_
 
 * **CREATE PROJECT**
-----
+
   _Create a new project_
 
 * **URL**
