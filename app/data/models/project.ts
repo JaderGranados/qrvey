@@ -1,6 +1,7 @@
-const mongoose = require('mongoose')
-const schemaBase = require('./schema-base')
-const Schema = mongoose.Schema;
+import { Schema, model } from 'mongoose';
+import { ProjectInterface } from '../interfaces/project.interface';
+import schemaBase from './schema-base';
+
 
 const ProjectSchema = new Schema({
     name: {
@@ -19,5 +20,5 @@ const ProjectSchema = new Schema({
     ... schemaBase
 });
 
-var model = mongoose.model('projects', ProjectSchema);
-module.exports = model;
+var ProjectModel = model<ProjectInterface>('projects', ProjectSchema);
+export default ProjectModel;

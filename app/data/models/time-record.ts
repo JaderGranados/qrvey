@@ -1,13 +1,10 @@
-const mongoose = require('mongoose')
-const schemaBase = require('./schema-base')
-const Schema = mongoose.Schema;
-const taskStatusEnum = require('./task-status');
-const timesRecordString = Object.keys(taskStatusEnum).map(key => {
-    return taskStatusEnum[key];
-});
+import { Schema, model } from 'mongoose';
+import schemaBase from './schema-base';
+import {created, ended, paused, started } from './task-status';
+const timesRecordString = [created, ended, paused, started];
 timesRecordString.push('RESTARTED');
 
-const TimeRecordModel = new Schema({
+const TimeRecordSchema = new Schema({
     task: {
         type: Schema.Types.ObjectId,
         ref: 'tasks',
@@ -27,5 +24,5 @@ const TimeRecordModel = new Schema({
     ... schemaBase
 });
 
-var model = mongoose.model('timerecords', TimeRecordModel);
-module.exports = model;
+var TimeRecordModel = model('timerecords', TimeRecordSchema);
+export default TimeRecordModel;

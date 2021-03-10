@@ -1,9 +1,9 @@
-const { Router } = require('express');
+import { Request, Response, Router } from 'express';
+import service from '../services/user.service';
 const router = Router();
-const service = require('../services/user.service');
 
 
-router.get('/api/user', async (req, res) => {
+router.get('/api/user', async (req:Request, res:Response) => {
     try{
         res.send({
             success: true,
@@ -19,7 +19,7 @@ router.get('/api/user', async (req, res) => {
     }
 });
 
-router.post('/api/user', async (req, res) => {
+router.post('/api/user', async (req:Request, res:Response) => {
     try {
         res.send({
             success: true,
@@ -35,7 +35,7 @@ router.post('/api/user', async (req, res) => {
     }
 });
 
-router.put('/api/user/:uid', async (req, res) => {
+router.put('/api/user/:uid', async (req:Request, res:Response) => {
     try {
         if(!req.params.uid){
             throw new Error("Couldn't get user id");
@@ -54,4 +54,4 @@ router.put('/api/user/:uid', async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

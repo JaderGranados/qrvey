@@ -1,7 +1,7 @@
-const mongoose = require('mongoose')
-const schemaBase = require('./schema-base')
-const Schema = mongoose.Schema;
-const taskStatusEnum = require('./task-status');
+import { Schema, model } from 'mongoose';
+import TaskInterface from '../interfaces/task.interface';
+import schemaBase from './schema-base';
+import { created, ended, paused, started} from './task-status';
 
 const TaskSchema = new Schema({
     name: {
@@ -19,9 +19,7 @@ const TaskSchema = new Schema({
     status:{
         type: String,
         required: true,
-        enum: Object.keys(taskStatusEnum).map(key => {
-            return taskStatusEnum[key];
-        }),
+        enum: [created, ended, paused, started],
         default: 'CREATED'
     },
     project: {
@@ -36,5 +34,5 @@ const TaskSchema = new Schema({
     ... schemaBase
 });
 
-var model = mongoose.model('tasks', TaskSchema);
-module.exports = model;
+var TaskModel = model<TaskInterface>('tasks', TaskSchema);
+export default TaskModel;

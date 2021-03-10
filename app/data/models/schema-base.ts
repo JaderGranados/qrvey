@@ -11,4 +11,4 @@ const schemaBase = {
     }
 }
 
-module.exports = schemaBase;
+export default schemaBase;
