@@ -7,6 +7,7 @@ services:
       context: .
       args: 
         - WORK_DIR=usr/src
+        - NODE_ENV=production
     container_name: qrvery_web
     ports: 
       - '8080:8080'

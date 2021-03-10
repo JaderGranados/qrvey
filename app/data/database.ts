@@ -1,8 +1,11 @@
 import { connect } from 'mongoose';
+import * as config from 'config';
 
 export module Database{
     export const Connect = ():void => {
-        connect('mongodb://mongo/mydatabase', {
+        const dbConfig = config.get('qrvey.connectionString');
+        console.log(dbConfig);
+        connect(`${dbConfig}`, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         })

@@ -1,0 +1,5 @@
+{
+  "qrvey": {
+    "connectionString": "mongodb://mongo/mydatabase"
+  }
+}

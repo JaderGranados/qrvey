@@ -3,6 +3,9 @@ FROM node:14
 
 # Enviroment variables
 ARG WORK_DIR
+ARG NODE_ENV=development
+ENV NODE_ENV ${NODE_ENV}
+ 
 
 # Preparing workdir
 RUN mkdir -p ${WORK_DIR}
@@ -13,6 +16,5 @@ COPY package*.json ./
 
 # Init commands
 RUN npm install
-COPY . .
 
 # CMD [ "npm", "run", "dev" ]
