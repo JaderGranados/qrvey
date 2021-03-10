@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "QRVEY APP",
   "scripts": {
+    "start:ts": "ts-node app/index.ts",
     "start:dev": "nodemon",
     "build": "rm -r ./build; tsc; cp ./node_modules/common-js/common.min.js ./build/",
     "start": "npm run build; node build/index.js",
