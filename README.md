@@ -1,6 +1,6 @@
 *QRVEY APP*
 ----
-  API Rest service for manage tasks.
+  API Rest service for managing tasks.
 
 * **URL Base**
   _https://qrvey.herokuapp.com/_
