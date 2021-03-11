@@ -1,6 +1,11 @@
 *QRVEY APP*
 ----
   API Rest service for managing tasks.
+  
+  **Run**
+    ***dev*** `npm run start:dev`
+    ***prod*** `npm run start`
+    ***test*** `npm run test`
 
 * **URL Base**
   _https://qrvey.herokuapp.com/_
