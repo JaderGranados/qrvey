@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import UserInterface from '../interfaces/user.interface';
 import schemaBase from './schema-base';
 
 const UserSchema = new Schema({
@@ -26,5 +27,5 @@ const UserSchema = new Schema({
     ... schemaBase
 });
 
-var UserModel = model('users', UserSchema);
+var UserModel = model<UserInterface>('users', UserSchema);
 export default UserModel;
