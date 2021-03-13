@@ -3,11 +3,13 @@
   API Rest service for managing tasks.
   
   **Run**
-    ***dev*** `npm run start:dev`
-    ***prod*** `npm run start`
-    ***test*** `npm run test`
+    ***dev*** `npm run start:dev`<br />
+    ***prod*** `npm run start` <br />
+    ***test*** `npm run test` <br />
+    ***docker-compose*** `docker-compose up --build`
 
 * **URL Base**
+  _For consume these services, you need to put in request headers the next bearer token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE4ODczMTY2NjcsImlzcyI6ImxldmVsdXBzb2Z0LmNvbSIsImF1ZCI6ImxldmVsdXBzb2Z0LmNvbSJ9.7EDT9dnLAgcFXRsKmgcPw8BVieDUJFJuGvJ9t4JfwAI_
   _https://qrvey.herokuapp.com/_
 
 * **Create Project**
